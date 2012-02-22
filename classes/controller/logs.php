@@ -79,12 +79,11 @@ class Controller_Logs extends Controller {
         foreach ($years as $year) {
             if ($yearMonths = @scandir($this->_logDir . '/' . $year)) {
                 $yearMonths = array_slice($yearMonths, 2);
-                array_walk($yearMonths, function(&$m, $k, $y)
-                    {
-                        $m = (substr($m,0,1) != ".") ? $y . DIRECTORY_SEPARATOR . $m : '';
-                    }, $year);
-
-                $months = array_merge($months, $yearMonths);
+                                
+                foreach ($yearMonths as $m)
+                {
+                	$months[] = (substr($m,0,1) != ".") ? $year . DIRECTORY_SEPARATOR . $m : '';
+                }
             }
         }
         return $months;
